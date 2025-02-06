@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class name='testClass'>
+    <attributes>
+        <attr name='sCaption' attrType='Text' order='0' caption='Наименование'/>
+        <attr name='nRow' attrType='Integer'/>
+    </attributes>
+</class>
