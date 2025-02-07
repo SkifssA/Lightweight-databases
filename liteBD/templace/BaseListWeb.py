@@ -13,6 +13,7 @@ class BaseListWeb(BaseDefaultWeb):
         columns = self.__getStandartColumns()
         df = pd.DataFrame(w[1:], columns=w[0])
         return html.Div([
+            *self._getStandartLayout(),
             *(layoutType[i['typeEdit']](i) for i in self.__class__._decorated_methods),
             # Таблица без радиокнопок и чекбоксов
             dash_table.DataTable(
@@ -79,6 +80,6 @@ class BaseListWeb(BaseDefaultWeb):
     # def setRow(value):
     #     print(value)
 
-    # @Oper('Тесты')
-    # def openList(value):
-    #     print(value)
+    @Oper('Тесты')
+    def openList(value):
+        print(value)

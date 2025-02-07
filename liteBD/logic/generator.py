@@ -1,8 +1,16 @@
 import xml.etree.ElementTree as ET
 import sqlite3
+import glob
 
 from liteBD.templace.ClassTemp import *
 import liteBD.SETTING as SETTING
+
+def generatorAllClass():
+    pattern = "**/*.xml"  # Двойная звёздочка означает "любая глубина"
+    # Поиск файлов
+    files = glob.glob(pattern, recursive=True)
+    for file in files:
+        generatorClass(file)
 
 def generatorClass(path: str):
     data = _parseXml(path)
@@ -10,7 +18,7 @@ def generatorClass(path: str):
     _createTab(data)
 
 
-    data['attrs'].append({'name': 'id', 'caption': 'id', 'isVisible': False, 'refClass': None, 'order': -1})
+    data['attrs'].append({'name': 'id', 'caption': 'id', 'isVisible': False, 'refClass': None, 'order': -1, 'attrType': 'Integer'})
     _createGui(data, pathDir)
 
 
@@ -24,8 +32,8 @@ def _parseXml(path: str):
         attrDict = {
             'name': attr.get('name'),
             'attrType': attr.get('attrType'),
-            'order': attr.get('order'),
-            'caption': attr.get('caption'),
+            'order': attr.get('order', 10000),
+            'caption': attr.get('caption', attr.get('name')),
             'refClass': attr.get('refClass'),
             'isVisible': attr.get('isVisible', True)
         }
@@ -50,7 +58,7 @@ def _createGui(data: dict, path: str):
             f.write(TempGuiV.format(**{'request': _createRequest(data), 'AttrSettings': _createDictAttr(data)}))
 
         with open(f"{path}/{data['name']}GuiA.py", 'x') as f:
-            f.write(TempGuiA.format(**{'name': data['name']}))
+            f.write(TempGuiA.format(**{'name': data['name'], 'pathFull': _getpathFull(path)}))
     except FileExistsError:
         pass
 
@@ -85,8 +93,11 @@ def _createDictAttr(data: dict):
     return f'''[
         {',\n\t\t'.join(l + f'\'name\': \'{attr['name']}\', \'caption\': \'{attr['caption']}\', '+\
                        f'\'isVisible\': {attr['isVisible']}, \'isReference\': {attr['refClass'] is not None}, '+\
-                       f'\'order\':{attr['order']}' + r
+                       f'\'order\':{attr['order']}, \'attrType\':\'{attr['attrType']}\'' + r
                        for attr in data['attrs'])}
     ]
     '''
     
+def _getpathFull(path:str):
+    print(path)
+    return '.'.join(path.split('/'))

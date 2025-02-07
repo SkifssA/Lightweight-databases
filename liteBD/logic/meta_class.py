@@ -12,7 +12,10 @@ class MetaDecorator(type):
         # Словарь для хранения имён методов и их параметров
         decorated_methods = []
         # Проходим по всем методам класса
+
+        print(name)
         for attr_name, attr_value in dct.items():
+            print(attr_name)
             if callable(attr_value):
                 if hasattr(attr_value, '_setter'):
                     decorated_methods.append(cls.deroratorWork(
@@ -25,6 +28,8 @@ class MetaDecorator(type):
             
         # Добавляем словарь декорированных методов как атрибут класса
         dct['_decorated_methods'] = decorated_methods
+        
+        print(name, decorated_methods)
 
         return super().__new__(cls, name, bases, dct)
     

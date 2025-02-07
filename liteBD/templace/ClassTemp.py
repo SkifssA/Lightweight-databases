@@ -8,13 +8,18 @@ class Default(BaseDefaultWeb):
 class List(Default, BaseListWeb):
     AttrSettings = {AttrSettings}
     pass
+class Card(Default, BaseCardWeb):
+    AttrSettings = {AttrSettings}
+    pass
 """
 
-TempGuiA = """from . import {name}GuiV
-class {name}GuiA:
-    class Default({name}GuiV.Default):
-        pass
-        
-    class List({name}GuiV.List):
-        pass
+TempGuiA = """from {pathFull} import {name}GuiV
+class Default({name}GuiV.Default):
+    pass
+    
+class List({name}GuiV.List):
+    pass
+
+class Card({name}GuiV.Card):
+    pass
 """

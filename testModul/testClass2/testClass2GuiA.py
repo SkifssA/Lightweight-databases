@@ -1,11 +1,9 @@
-from . import testClass2GuiV
-from .testClass2GuiV import *
+from testModul.testClass2 import testClass2GuiV
+class Default(testClass2GuiV.Default):
+    pass
+    
+class List(testClass2GuiV.List):
+    pass
 
-class testClass2GuiA:
-    class Default(testClass2GuiV.Default):
-        pass
-        
-    class List(testClass2GuiV.List):
-        @Oper('Хуета', State('table', 'id'))
-        def weq(value, id):
-            print('123123')
+class Card(testClass2GuiV.Card):
+    pass

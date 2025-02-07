@@ -2,9 +2,9 @@ from liteBD import *
 
 class Default(BaseDefaultWeb):
     AttrSettings = [
-        {'name': 'sCaption', 'caption': 'Наименование', 'isVisible': True, 'isReference': False, 'order':0},
-		{'name': 'nRow', 'caption': 'None', 'isVisible': True, 'isReference': False, 'order':None},
-		{'name': 'id', 'caption': 'id', 'isVisible': False, 'isReference': False, 'order':-1}
+        {'name': 'sCaption', 'caption': 'Наименование', 'isVisible': True, 'isReference': False, 'order':0, 'attrType':'Text'},
+		{'name': 'nRow', 'caption': 'nRow', 'isVisible': True, 'isReference': False, 'order':10000, 'attrType':'Integer'},
+		{'name': 'id', 'caption': 'id', 'isVisible': False, 'isReference': False, 'order':-1, 'attrType':'Integer'}
     ]
     
     def requestSQL(self)->str:
@@ -19,9 +19,17 @@ class Default(BaseDefaultWeb):
     
 class List(Default, BaseListWeb):
     AttrSettings = [
-        {'name': 'sCaption', 'caption': 'Наименование', 'isVisible': True, 'isReference': False, 'order':0},
-		{'name': 'nRow', 'caption': 'None', 'isVisible': True, 'isReference': False, 'order':None},
-		{'name': 'id', 'caption': 'id', 'isVisible': False, 'isReference': False, 'order':-1}
+        {'name': 'sCaption', 'caption': 'Наименование', 'isVisible': True, 'isReference': False, 'order':0, 'attrType':'Text'},
+		{'name': 'nRow', 'caption': 'nRow', 'isVisible': True, 'isReference': False, 'order':10000, 'attrType':'Integer'},
+		{'name': 'id', 'caption': 'id', 'isVisible': False, 'isReference': False, 'order':-1, 'attrType':'Integer'}
+    ]
+    
+    pass
+class Card(Default, BaseCardWeb):
+    AttrSettings = [
+        {'name': 'sCaption', 'caption': 'Наименование', 'isVisible': True, 'isReference': False, 'order':0, 'attrType':'Text'},
+		{'name': 'nRow', 'caption': 'nRow', 'isVisible': True, 'isReference': False, 'order':10000, 'attrType':'Integer'},
+		{'name': 'id', 'caption': 'id', 'isVisible': False, 'isReference': False, 'order':-1, 'attrType':'Integer'}
     ]
     
     pass
