@@ -1,4 +1,5 @@
 from .custom_decorator import *
+import pandas as pd
 from dash import dcc, html, Input, Output, State
 
 layoutType = {
@@ -8,30 +9,38 @@ layoutType = {
 }
 
 class MetaDecorator(type):
-    def __new__(cls, name, bases, dct):
+    def __new__(cls, name, bases, namespace):
         # Словарь для хранения имён методов и их параметров
         decorated_methods = []
+        parent_decorated_methods = []
         # Проходим по всем методам класса
-
-        print(name)
-        for attr_name, attr_value in dct.items():
-            print(attr_name)
+        for attr_name, attr_value in namespace.items():
             if callable(attr_value):
                 if hasattr(attr_value, '_setter'):
                     decorated_methods.append(cls.deroratorWork(
-                        attr_value, attr_name, dct,(Input(attr_name, 'value'),)
+                        attr_value, attr_name, namespace,(Input(attr_name, 'value'),)
                         ))
                 elif hasattr(attr_value, '_oper'):
                     decorated_methods.append(cls.deroratorWork(
-                        attr_value, attr_name, dct,(Input(attr_name, 'n_clicks'), *getattr(attr_value, '_custom_decorator_params', {})['state']),
+                        attr_value, attr_name, namespace,(*getattr(attr_value, '_custom_decorator_params', {})['state'], Input(attr_name, 'n_clicks')),
                         {'typeEdit':'Button'}))
             
+        for base in bases:
+            if hasattr(base, 'decorated_methods'):   
+                parent_decorated_methods += base.decorated_methods
         # Добавляем словарь декорированных методов как атрибут класса
-        dct['_decorated_methods'] = decorated_methods
-        
-        print(name, decorated_methods)
 
-        return super().__new__(cls, name, bases, dct)
+        df = pd.DataFrame(parent_decorated_methods + decorated_methods)
+
+        # Удаляем дубликаты
+        df_unique = df.drop_duplicates()
+
+        # Преобразуем обратно в список словарей
+        unique_data = df_unique.to_dict(orient='records')
+
+        namespace['decorated_methods'] = unique_data
+
+        return super().__new__(cls, name, bases, namespace)
     
     def deroratorWork(attr_value, attr_name, dct, paramCallback, param={}):
         decorator_params = getattr(attr_value, '_custom_decorator_params', {})

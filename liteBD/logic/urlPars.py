@@ -26,12 +26,8 @@ def openClass(moduleName, className, param):
 def getGuiAFile():
     # Шаблон для рекурсивного поиска
     pattern = "**/*GuiA.py"  # Двойная звёздочка означает "любая глубина"
-
     # Поиск файлов
     files = glob.glob(pattern, recursive=True)
-
-    print("Найденные файлы:")
     for file in files:
         f = file[:file.rfind('/')]
-        print(f)
         sys.path.append(f)

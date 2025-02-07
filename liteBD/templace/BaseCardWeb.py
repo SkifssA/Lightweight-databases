@@ -17,6 +17,7 @@ class BaseCardWeb(BaseDefaultWeb):
         attrData = {data[0][i]:data[1][i] for i in range(len(data[0]))}
         nested_list = (self.getLableAndInput(attr, attrData) for attr in sorted(self.__class__.AttrSettings, key=lambda x: x['order']))
         return html.Div([
+            *self._getStandartLayout(),
             *(item for sublist in nested_list for item in sublist)
         ])
     

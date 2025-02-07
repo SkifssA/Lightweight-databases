@@ -10,7 +10,7 @@ def register_callback(*_args, **_kwargs):
             return func(*args, **kwargs)
         func
         # Регистрация callback в приложении
-        SETTING.selfApp.callback(
+        SETTING.selfApp.callback( prevent_initial_call='initial_duplicate',
             *_args, **_kwargs # Параметры callback берутся из атрибута _callback_args
         )(wrapper)
 
@@ -18,7 +18,7 @@ def register_callback(*_args, **_kwargs):
 
     return decorator
 
-def Oper(caption, state=(), **kwargs):
+def Oper(caption, param=(), **kwargs):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs_func):
@@ -27,7 +27,7 @@ def Oper(caption, state=(), **kwargs):
         # Помечаем функцию, чтобы мета-класс мог её найти
         wrapper._oper = True
         # Сохраняем параметры декоратора
-        wrapper._custom_decorator_params = kwargs | {'caption': caption} | {'state': state}
+        wrapper._custom_decorator_params = kwargs | {'caption': caption} | {'state': param}
         return wrapper
     return decorator
 

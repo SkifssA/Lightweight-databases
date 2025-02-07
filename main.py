@@ -1,15 +1,14 @@
 from dash import Dash, dcc, html, callback_context
+import random
 
 from liteBD import *
 
 
 getGuiAFile()
-
 generatorAllClass()
 
 
 app = SETTING.selfApp
-
 
 # Layout приложения
 app.layout = html.Div([
@@ -19,7 +18,6 @@ app.layout = html.Div([
     dcc.Link('Перейти на страницу 2', href='/testClass2/List'),
     html.Div(id='page-content')  # Содержимое текущей страницы
 ])
-
 
 # Запуск сервера
 if __name__ == '__main__':
