@@ -1,7 +1,7 @@
 import sqlite3
 from liteBD.logic.meta_class import register_callback as callback 
 from liteBD.logic.meta_class import *
-from liteBD.logic.urlPars import openClass
+from liteBD.logic.urlPars import openClass, refreshClass
 from liteBD.SETTING import selfApp
 
 def refreshLayout(pathname, search):
@@ -11,17 +11,17 @@ def refreshLayout(pathname, search):
                 params = dict([p.split('=') for p in search[1:].split('&')])
         if len(str(pathname)) > 4:
             className, subClassName = str(pathname)[1:].split('/')
-            return openClass(className, subClassName, params)
+        return (className, subClassName, params)
 
 class BaseDefaultWeb(metaclass=MetaDecorator):
     AttrSettings = []
     decorated_methods = []
     
     def requestSQL(self):
-        print('НЕ ПЕРЕОПРЕДЕЛЕНО')
+        pass
 
     def whereSQL(self):
-        print('НЕ ПЕРЕОПРЕДЕЛЕНО')
+        pass
 
     def onRefresh(self):
         """Должен вернуть матрицу где 1 строка это название столбцов для List"""
@@ -33,12 +33,23 @@ class BaseDefaultWeb(metaclass=MetaDecorator):
         return [column_names, *cursor.fetchall()]
 
     def _getStandartLayout(self):
-        return (dcc.Location(id='url', refresh=False), *(layoutType[i['typeEdit']](i) for i in self.__class__.decorated_methods), html.Br())
+        return (
+            html.Div([*(layoutType[i['typeEdit']](i) for i in self.__class__.decorated_methods), html.Br()], id='ToolBar'),
+                )
+    
+    def _getMainLayoutDefault(self):
+        return html.Div([
+            *self._getMainLayout()
+        ], id='MainLayout')
 
     def getLayout(self):
-        print('НЕ ПЕРЕОПРЕДЕЛЕНО')
+        return html.Div([
+            *self._getStandartLayout(),
+            self._getMainLayoutDefault()
+        ])
 
-    
+    def _getMainLayout(self):
+        pass
 
     @selfApp.callback(
         Output('page-content', 'children', allow_duplicate=True),
@@ -46,12 +57,12 @@ class BaseDefaultWeb(metaclass=MetaDecorator):
         Input('url', 'search')
     )
     def display_page(pathname, search):
-        return refreshLayout(pathname, search)
+        return openClass(*refreshLayout(pathname, search))
         
-    # @Oper('Обновить', (
-    #         Output('page-content', 'children', allow_duplicate=True),
-    #         State('url', 'pathname'),
-    #         State('url', 'search'),
-    # ))
-    # def openList(n, pathname, search):
-    #     return refreshLayout(pathname, search)
+    @Oper('Обновить', (
+            Output('MainLayout', 'children', allow_duplicate=True),
+            State('url', 'pathname'),
+            State('url', 'search'),
+    ))
+    def refresh(pathname, search, n):
+        return refreshClass(*refreshLayout(pathname, search))

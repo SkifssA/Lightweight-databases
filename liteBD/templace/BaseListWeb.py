@@ -8,12 +8,11 @@ class BaseListWeb(BaseDefaultWeb):
     def __init__(self):
         pass
 
-    def getLayout(self):
+    def _getMainLayout(self):
         w = self.onRefresh()
         columns = self.__getStandartColumns()
         df = pd.DataFrame(w[1:], columns=w[0])
-        return html.Div([
-            *self._getStandartLayout(),
+        return [
             # Таблица без радиокнопок и чекбоксов
             dash_table.DataTable(
                 id='table',
@@ -35,8 +34,7 @@ class BaseListWeb(BaseDefaultWeb):
                 ],
                 style_cell_conditional = columns['style']
             ),
-        ])
-    
+        ]
 
     def __getStandartColumns(self)->dict:
         res = {
