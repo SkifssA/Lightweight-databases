@@ -29,5 +29,5 @@ def getGuiAFile():
     # Поиск файлов
     files = glob.glob(pattern, recursive=True)
     for file in files:
-        f = file[:file.rfind('/')]
+        f = file[:max(file.rfind('/'), file.rfind('\\'))]
         sys.path.append(f)

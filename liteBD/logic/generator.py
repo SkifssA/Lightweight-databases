@@ -54,10 +54,10 @@ def _createTab(data: dict):
 
 def _createGui(data: dict, path: str):
     try:
-        with open(f"{path}/{data['name']}GuiV.py", 'w') as f:
+        with open(f"{path}/{data['name']}GuiV.py", 'w', encoding='UTF-8') as f:
             f.write(TempGuiV.format(**{'request': _createRequest(data), 'AttrSettings': _createDictAttr(data)}))
 
-        with open(f"{path}/{data['name']}GuiA.py", 'x') as f:
+        with open(f"{path}/{data['name']}GuiA.py", 'x', encoding='UTF-8') as f:
             f.write(TempGuiA.format(**{'name': data['name'], 'pathFull': _getpathFull(path)}))
     except FileExistsError:
         pass
@@ -99,5 +99,4 @@ def _createDictAttr(data: dict):
     '''
     
 def _getpathFull(path:str):
-    print(path)
     return '.'.join(path.split('/'))

@@ -79,6 +79,6 @@ class BaseListWeb(BaseDefaultWeb):
     # def setRow(value):
     #     print(value)
 
-    # @Oper('Создать')
-    # def openList(value):
-    #     print(value)
+    @Oper('Создать')
+    def openList(value):
+        print(value)

@@ -9,7 +9,6 @@ class BaseCardWeb(BaseDefaultWeb):
     def getLayout(self, param):
         self.idObject = param['id']
         data = self.onRefresh()
-        print(data)
         try:
             data[1][0]
         except:
