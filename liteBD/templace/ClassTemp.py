@@ -23,3 +23,27 @@ class List({name}GuiV.List):
 class Card({name}GuiV.Card):
     pass
 """
+
+TempLogV = """
+class Rop:
+    def __init__(self, {attrs}):
+{classAttr}
+
+class {name}LogV:
+    def insert():
+        return {name}Rop()
+    
+    def load(id):
+        w = getReguest("""""")
+        return testClass2Rop(**w.__dict__)
+{setter}
+"""
+
+TempLogA = """from {pathFull} import {name}LogV
+class {name}LogA({name}LogV.{name}LogV):
+    pass
+"""
+
+TempSetter = """def set{classAttr}(rop:{name}Rop, value):
+        rop.{classAttr} = value
+"""

@@ -1,11 +1,12 @@
-from dash import Dash, dcc, html, callback_context
-import random
+from dash import dcc, html
 
 from liteBD import *
 
+from testModul.testClass2.testClass2LogA import testClass2LogA 
 
-getGuiAFile()
-generatorAllClass()
+
+# getGuiAFile()
+# generatorAllClass()
 
 
 app = SETTING.selfApp
@@ -18,6 +19,8 @@ app.layout = html.Div([
     dcc.Link('Перейти на страницу 2', href='/testClass2/List'),
     html.Div(id='page-content')  # Содержимое текущей страницы
 ])
+
+print(testClass2LogA().load(1).__dict__)
 
 # Запуск сервера
 if __name__ == '__main__':

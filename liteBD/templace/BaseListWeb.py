@@ -5,12 +5,9 @@ from .BaseDefaultWeb import *
 
 
 class BaseListWeb(BaseDefaultWeb):
-    def __init__(self):
-        pass
-
-    def _getMainLayout(self):
-        w = self.onRefresh()
+    def _getMainLayout(self, params):
         columns = self.__getStandartColumns()
+        w = self.onRefresh()
         df = pd.DataFrame(w[1:], columns=w[0])
         return [
             # Таблица без радиокнопок и чекбоксов
@@ -72,7 +69,7 @@ class BaseListWeb(BaseDefaultWeb):
                         'backgroundColor': '#f0f0ff'
                     }]
     
-    # Примеры Setter и Oper
+    # Примеры Setter
     # @Setter(typeEdit='Input')
     # def setRow(value):
     #     print(value)

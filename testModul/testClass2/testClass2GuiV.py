@@ -1,4 +1,5 @@
 from liteBD import *
+from .testClass2LogV import testClass2LogV
 
 class Default(BaseDefaultWeb):
     AttrSettings = [
@@ -37,4 +38,5 @@ class Card(Default, BaseCardWeb):
 		{'name': 'id', 'caption': 'id', 'isVisible': False, 'isReference': False, 'order':-1, 'attrType':'Integer'}
     ]
     
-    pass
+    def onRefresh(self):
+        return testClass2LogV().load()

@@ -2,15 +2,16 @@ import sqlite3
 from liteBD.logic.meta_class import register_callback as callback 
 from liteBD.logic.meta_class import *
 from liteBD.logic.urlPars import openClass, refreshClass
+from liteBD.logic.requestBD import getReguest
 from liteBD.SETTING import selfApp
 
 def refreshLayout(pathname, search):
-        params = None
-        if search is not None:
-            if len(search) > 4:
-                params = dict([p.split('=') for p in search[1:].split('&')])
         if len(str(pathname)) > 4:
             className, subClassName = str(pathname)[1:].split('/')
+        params = {'className': className}
+        if search is not None:
+            if len(search) > 4:
+                params = params | dict([p.split('=') for p in search[1:].split('&')])
         return (className, subClassName, params)
 
 class BaseDefaultWeb(metaclass=MetaDecorator):
@@ -25,12 +26,7 @@ class BaseDefaultWeb(metaclass=MetaDecorator):
 
     def onRefresh(self):
         """Должен вернуть матрицу где 1 строка это название столбцов для List"""
-        conn = sqlite3.connect(SETTING.nameDB)
-        cursor = conn.cursor()
-        cursor.execute(self.requestSQL() + (x if isinstance(x:=self.whereSQL(), str) else ''))
-        column_names = [description[0] for description in cursor.description]
-        cursor.fetchall()
-        return [column_names, *cursor.fetchall()]
+        return getReguest(self.requestSQL() + (x if isinstance(x:=self.whereSQL(), str) else ''))
 
     def _getStandartLayout(self):
         return (

@@ -4,6 +4,7 @@ import glob
 
 from liteBD.templace.ClassTemp import *
 import liteBD.SETTING as SETTING
+from .requestBD import setReguest
 
 def generatorAllClass():
     pattern = "**/*.xml"  # Двойная звёздочка означает "любая глубина"
@@ -16,10 +17,11 @@ def generatorClass(path: str):
     data = _parseXml(path)
     pathDir = path[:max(path.rfind('/'), path.rfind('\\'))]
     _createTab(data)
-
-
+    
     data['attrs'].append({'name': 'id', 'caption': 'id', 'isVisible': False, 'refClass': None, 'order': -1, 'attrType': 'Integer'})
     _createGui(data, pathDir)
+    _createLog(data, pathDir)
+    
 
 
 def _parseXml(path: str):
@@ -41,24 +43,23 @@ def _parseXml(path: str):
     return data
 
 def _createTab(data: dict):
-    conn = sqlite3.connect(SETTING.nameDB)
-    cursor = conn.cursor()
-    cursor.execute(f'''
+    setReguest(f'''
     CREATE TABLE IF NOT EXISTS {data['name']} (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         sHeadLine Text,
         {',\n'.join(f'{attr['name']} {attr['attrType']}' for attr in data['attrs'])}
     )
     ''')
-    conn.commit()
 
 def _createGui(data: dict, path: str):
     try:
         with open(f"{path}/{data['name']}GuiV.py", 'w', encoding='UTF-8') as f:
-            f.write(TempGuiV.format(**{'request': _createRequest(data), 'AttrSettings': _createDictAttr(data)}))
+            f.write(TempGuiV.format(**{'request': _createRequest(data)
+                                       ,'AttrSettings': _createDictAttr(data)}))
 
         with open(f"{path}/{data['name']}GuiA.py", 'x', encoding='UTF-8') as f:
-            f.write(TempGuiA.format(**{'name': data['name'], 'pathFull': _getpathFull(path)}))
+            f.write(TempGuiA.format(**{'name': data['name']
+                                       ,'pathFull': _getpathFull(path)}))
     except FileExistsError:
         pass
 
@@ -100,3 +101,34 @@ def _createDictAttr(data: dict):
     
 def _getpathFull(path:str):
     return '.'.join(path.split('/'))
+
+def _createLog(data: dict, path: str):
+    try:
+        with open(f"{path}/{data['name']}LogV.py", 'w', encoding='UTF-8') as f:
+            f.write(TempLogV.format(**{'name': data['name']
+                                       ,'classAttr': _getClassAttr(data)
+                                       ,'setter': _getSetter(data)
+                                       ,'attrs': _getAttrs(data)})                                     )
+
+        with open(f"{path}/{data['name']}LogA.py", 'x', encoding='UTF-8') as f:
+            f.write(TempLogA.format(**{'name': data['name']
+                                       ,'pathFull': _getpathFull(path)}))
+    except FileExistsError:
+        pass
+
+def _getAttrs(data: dict):
+    return f'{', '.join(f"{i['name']}=None" for i in data['attrs'])}'
+
+def _getClassAttr(data: dict):
+    t = ' '*8
+    return f"""{t}{f'\n{t}'.join(f"self.{i['name']}={i['name']}" for i in data['attrs'])}
+"""
+
+def _getSetter(data:dict):
+    t = ' '*4
+    return f"""
+    {f'\n{t}'.join(TempSetter.format(**{'name': data['name'], 'classAttr': i['name']}) for i in data['attrs'])}
+"""
+
+
+
