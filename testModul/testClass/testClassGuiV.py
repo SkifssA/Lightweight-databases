@@ -1,4 +1,5 @@
 from liteBD import *
+from .testClassLogV import testClassLogV
 
 class Default(BaseDefaultWeb):
     AttrSettings = [
@@ -32,4 +33,9 @@ class Card(Default, BaseCardWeb):
 		{'name': 'id', 'caption': 'id', 'isVisible': False, 'isReference': False, 'order':-1, 'attrType':'Integer'}
     ]
     
-    pass
+    def __init__(self):
+        super().__init__()
+        self.register_input_callbacks()
+        
+    def onRefresh(self, param):
+        return testClassLogV().load(param['id'])

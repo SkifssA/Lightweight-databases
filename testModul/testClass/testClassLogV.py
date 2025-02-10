@@ -1,5 +1,6 @@
-
+from liteBD import *
 class Rop:
+    tablName = 'testClass'
     def __init__(self, sCaption=None, nRow=None, id=None):
         self.sCaption=sCaption
         self.nRow=nRow
@@ -8,19 +9,24 @@ class Rop:
 
 class testClassLogV:
     def insert():
-        return testClassRop()
+        return Rop()
     
-    def load(id):
-        w = getReguest()
-        return testClass2Rop(**w.__dict__)
+    def load(self, id):
+        w = getReguest(f'''SELECT
+    t.sCaption,
+t.nRow,
+t.id
+    FROM testClass t
+    WHERE t.id = {id}''')
+        return Rop(**{w[0][i]: w[1][i] for i in range(len(w[0]))})
 
-    def setsCaption(rop:testClassRop, value):
+    def setsCaption(rop:Rop, value):
         rop.sCaption = value
 
-    def setnRow(rop:testClassRop, value):
+    def setnRow(rop:Rop, value):
         rop.nRow = value
 
-    def setid(rop:testClassRop, value):
+    def setid(rop:Rop, value):
         rop.id = value
 
 

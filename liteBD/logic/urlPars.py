@@ -8,7 +8,7 @@ def getClass(moduleName, subName:str, className = None):
     module = importlib.import_module(module_name)
     cls = getattr(module, class_name, None) 
     if cls:
-        return cls
+        return cls()
     else:
         print(f"Класс {class_name} не найден")
 
@@ -21,6 +21,9 @@ def refreshClass(moduleName, className, param):
 
 def getRop(param):
     return getClass(param['className'], 'LogA').load(param['id'])
+
+def getHeadLine(className, id):
+    return getClass(className, 'LogA').getHeadLine(id)
 
 def getGuiAFile():
     # Шаблон для рекурсивного поиска

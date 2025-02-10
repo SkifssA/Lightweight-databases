@@ -1,4 +1,5 @@
 TempGuiV = """from liteBD import *
+from .{name}LogV import {name}LogV
 
 class Default(BaseDefaultWeb):
     AttrSettings = {AttrSettings}
@@ -10,7 +11,12 @@ class List(Default, BaseListWeb):
     pass
 class Card(Default, BaseCardWeb):
     AttrSettings = {AttrSettings}
-    pass
+    def __init__(self):
+        super().__init__()
+        self.register_input_callbacks()
+        
+    def onRefresh(self, param):
+        return {name}LogV().load(param['id'])
 """
 
 TempGuiA = """from {pathFull} import {name}GuiV
@@ -24,18 +30,19 @@ class Card({name}GuiV.Card):
     pass
 """
 
-TempLogV = """
+TempLogV = """from liteBD import *
 class Rop:
+    tablName = '{name}'
     def __init__(self, {attrs}):
 {classAttr}
 
 class {name}LogV:
     def insert():
-        return {name}Rop()
+        return Rop()
     
-    def load(id):
-        w = getReguest("""""")
-        return testClass2Rop(**w.__dict__)
+    def load(self, id):
+        w = getReguest(f'''{request}''')
+        return Rop(**{asDict})
 {setter}
 """
 
@@ -44,6 +51,6 @@ class {name}LogA({name}LogV.{name}LogV):
     pass
 """
 
-TempSetter = """def set{classAttr}(rop:{name}Rop, value):
+TempSetter = """def set{classAttr}(rop:Rop, value):
         rop.{classAttr} = value
 """

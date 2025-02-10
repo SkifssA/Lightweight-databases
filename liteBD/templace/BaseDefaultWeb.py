@@ -2,7 +2,7 @@ import sqlite3
 from liteBD.logic.meta_class import register_callback as callback 
 from liteBD.logic.meta_class import *
 from liteBD.logic.urlPars import openClass, refreshClass
-from liteBD.logic.requestBD import getReguest
+from liteBD.logic.requestBD import *
 from liteBD.SETTING import selfApp
 
 def refreshLayout(pathname, search):
@@ -33,18 +33,18 @@ class BaseDefaultWeb(metaclass=MetaDecorator):
             html.Div([*(layoutType[i['typeEdit']](i) for i in self.__class__.decorated_methods), html.Br()], id='ToolBar'),
                 )
     
-    def _getMainLayoutDefault(self):
+    def _getMainLayoutDefault(self, param):
         return html.Div([
-            *self._getMainLayout()
+            *self._getMainLayout(param)
         ], id='MainLayout')
 
-    def getLayout(self):
+    def getLayout(self, param):
         return html.Div([
             *self._getStandartLayout(),
-            self._getMainLayoutDefault()
+            self._getMainLayoutDefault(param)
         ])
 
-    def _getMainLayout(self):
+    def _getMainLayout(self, param):
         pass
 
     @selfApp.callback(

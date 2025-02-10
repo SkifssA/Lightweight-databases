@@ -5,3 +5,4 @@ from .templace.BaseCardWeb import BaseCardWeb
 from . import SETTING
 from dash import State
 from .logic.urlPars import *
+from .logic.requestBD import *

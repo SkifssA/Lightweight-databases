@@ -55,7 +55,8 @@ def _createGui(data: dict, path: str):
     try:
         with open(f"{path}/{data['name']}GuiV.py", 'w', encoding='UTF-8') as f:
             f.write(TempGuiV.format(**{'request': _createRequest(data)
-                                       ,'AttrSettings': _createDictAttr(data)}))
+                                       ,'AttrSettings': _createDictAttr(data)
+                                       ,'name': data['name']}))
 
         with open(f"{path}/{data['name']}GuiA.py", 'x', encoding='UTF-8') as f:
             f.write(TempGuiA.format(**{'name': data['name']
@@ -89,8 +90,9 @@ def _createRequest(data: dict):
 \t\t\t{'\n\t\t\t'.join(x for attr in data['attrs'] if (x:=joinStr(attr)) != '')}
     \t'''
 
+l, r = '{', '}'
+
 def _createDictAttr(data: dict):
-    l, r = '{', '}'
     return f'''[
         {',\n\t\t'.join(l + f'\'name\': \'{attr['name']}\', \'caption\': \'{attr['caption']}\', '+\
                        f'\'isVisible\': {attr['isVisible']}, \'isReference\': {attr['refClass'] is not None}, '+\
@@ -108,13 +110,21 @@ def _createLog(data: dict, path: str):
             f.write(TempLogV.format(**{'name': data['name']
                                        ,'classAttr': _getClassAttr(data)
                                        ,'setter': _getSetter(data)
-                                       ,'attrs': _getAttrs(data)})                                     )
+                                       ,'attrs': _getAttrs(data)
+                                       ,'request': _getRequest(data)
+                                       ,'asDict': f'{l}w[0][i]: w[1][i] for i in range(len(w[0])){r}'}))
 
         with open(f"{path}/{data['name']}LogA.py", 'x', encoding='UTF-8') as f:
             f.write(TempLogA.format(**{'name': data['name']
                                        ,'pathFull': _getpathFull(path)}))
     except FileExistsError:
         pass
+
+def _getRequest(data):
+    return f"""SELECT
+    {',\n'.join(f't.{attr['name']}' for attr in data['attrs'])}
+    FROM {data['name']} t
+    WHERE t.id = {l}id{r}"""
 
 def _getAttrs(data: dict):
     return f'{', '.join(f"{i['name']}=None" for i in data['attrs'])}'

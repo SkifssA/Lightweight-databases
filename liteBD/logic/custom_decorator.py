@@ -10,8 +10,9 @@ def register_callback(*_args, **_kwargs):
             return func(*args, **kwargs)
         func
         # Регистрация callback в приложении
-        SETTING.selfApp.callback( prevent_initial_call='initial_duplicate',
-            *_args, **_kwargs # Параметры callback берутся из атрибута _callback_args
+        SETTING.selfApp.callback(
+            *_args, **_kwargs,
+            prevent_initial_call=True
         )(wrapper)
 
         return wrapper

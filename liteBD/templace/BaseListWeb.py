@@ -74,6 +74,9 @@ class BaseListWeb(BaseDefaultWeb):
     # def setRow(value):
     #     print(value)
 
-    @Oper('Создать')
-    def openList(value):
-        print(value)
+    @Oper('Создать', (
+            Output('url', 'pathname'),
+            State('url', 'pathname'),
+    ))
+    def openCard(pathname, n):
+        return (pathname[:pathname.rfind('/')] + '/Card', '?id=0')
