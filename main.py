@@ -2,11 +2,9 @@ from dash import dcc, html
 
 from liteBD import *
 
-# from testModul.testClass2.testClass2LogA import testClass2LogA 
-
-
-getGuiAFile()
 generatorAllClass()
+getGuiAFile()
+
 
 
 app = SETTING.selfApp

@@ -76,6 +76,7 @@ class BaseListWeb(BaseDefaultWeb):
 
     @Oper('Создать', (
             Output('url', 'pathname'),
+            Output('url', 'search'),
             State('url', 'pathname'),
     ))
     def openCard(pathname, n):

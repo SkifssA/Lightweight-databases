@@ -4,7 +4,7 @@ import glob
 
 def getClass(moduleName, subName:str, className = None):
     module_name = moduleName + subName
-    class_name = className if className is not None else module_name + subName
+    class_name = className if className is not None else module_name
     module = importlib.import_module(module_name)
     cls = getattr(module, class_name, None) 
     if cls:
@@ -33,3 +33,4 @@ def getGuiAFile():
     for file in files:
         f = file[:max(file.rfind('/'), file.rfind('\\'))]
         sys.path.append(f)
+        getClass(file[max(file.rfind('/'), file.rfind('\\'))+1:-7], 'GuiA', 'Card').register_input_callbacks()

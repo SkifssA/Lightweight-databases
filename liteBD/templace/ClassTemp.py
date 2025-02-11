@@ -11,10 +11,7 @@ class List(Default, BaseListWeb):
     pass
 class Card(Default, BaseCardWeb):
     AttrSettings = {AttrSettings}
-    def __init__(self):
-        super().__init__()
-        self.register_input_callbacks()
-        
+    
     def onRefresh(self, param):
         return {name}LogV().load(param['id'])
 """
