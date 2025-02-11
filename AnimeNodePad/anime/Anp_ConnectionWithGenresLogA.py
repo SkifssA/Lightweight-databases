@@ -1,0 +1,3 @@
+from AnimeNodePad.anime import Anp_ConnectionWithGenresLogV
+class Anp_ConnectionWithGenresLogA(Anp_ConnectionWithGenresLogV.Anp_ConnectionWithGenresLogV):
+    pass

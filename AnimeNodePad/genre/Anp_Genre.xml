@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class name='Anp_Genre'>
+    <attributes>
+        <attr name='sCaption' attrType='Text' order='0' caption='Наименование'/>
+    </attributes>
+</class>

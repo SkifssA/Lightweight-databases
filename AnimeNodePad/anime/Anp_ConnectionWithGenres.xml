@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class name='Anp_ConnectionWithGenres'>
+    <attributes>
+        <attr name='idAnime' attrType='Integer' order='20' caption='Аниме' refClass='Anp_Anime' isVisible='True'/>
+        <attr name='idGenre' attrType='Integer' order='20' caption='Жанры' refClass='Anp_Genre' isVisible='True'/>
+    </attributes>
+</class>

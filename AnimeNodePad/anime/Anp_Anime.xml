@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class name='Anp_Anime'>
+    <attributes>
+        <attr name='sCaption' attrType='Text' order='0' caption='Наименование'/>
+        <attr name='sUrl' attrType='Text' order='10' caption='Ссылка' isVisible='False'/>
+        <attr name='nScore' attrType='Integer' order='20' caption='Оценка'/>
+        <attr name='sCommentSite' attrType='Text' order='30' caption='Описание'/>
+        <attr name='sComment' attrType='Text' order='40' caption='Мой коментарий'/>
+        <attr name='bVisible' attrType='Integer' order='50' caption='Просмотренно'/>
+        <attr name='bEnd' attrType='Integer' order='60' caption='Закончилось'/>
+    </attributes>
+</class>
