@@ -8,5 +8,6 @@
         <attr name='sComment' attrType='Text' order='40' caption='Мой коментарий'/>
         <attr name='bVisible' attrType='Integer' order='50' caption='Просмотренно'/>
         <attr name='bEnd' attrType='Integer' order='60' caption='Закончилось'/>
+        <attr name='idAnime' attrType='Integer' order='70' caption='Предок'/>
     </attributes>
 </class>

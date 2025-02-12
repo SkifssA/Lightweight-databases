@@ -1,7 +1,7 @@
 from liteBD import *
 class Rop:
     tablName = 'Anp_Anime'
-    def __init__(self, sCaption=None, sUrl=None, nScore=None, sCommentSite=None, sComment=None, bVisible=None, bEnd=None, id=None):
+    def __init__(self, sCaption=None, sUrl=None, nScore=None, sCommentSite=None, sComment=None, bVisible=None, bEnd=None, idAnime=None, id=None):
         self.sCaption=sCaption
         self.sUrl=sUrl
         self.nScore=nScore
@@ -9,6 +9,7 @@ class Rop:
         self.sComment=sComment
         self.bVisible=bVisible
         self.bEnd=bEnd
+        self.idAnime=idAnime
         self.id=id
 
 
@@ -25,6 +26,7 @@ t.sCommentSite,
 t.sComment,
 t.bVisible,
 t.bEnd,
+t.idAnime,
 t.id
     FROM Anp_Anime t
     WHERE t.id = {id}''')
@@ -50,6 +52,9 @@ t.id
 
     def setbEnd(rop:Rop, value):
         rop.bEnd = value
+
+    def setidAnime(rop:Rop, value):
+        rop.idAnime = value
 
     def setid(rop:Rop, value):
         rop.id = value

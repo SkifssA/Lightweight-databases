@@ -10,6 +10,7 @@ class Default(BaseDefaultWeb):
 		{'name': 'sComment', 'caption': 'Мой коментарий', 'isVisible': True, 'isReference': False, 'order':40, 'attrType':'Text'},
 		{'name': 'bVisible', 'caption': 'Просмотренно', 'isVisible': True, 'isReference': False, 'order':50, 'attrType':'Integer'},
 		{'name': 'bEnd', 'caption': 'Закончилось', 'isVisible': True, 'isReference': False, 'order':60, 'attrType':'Integer'},
+		{'name': 'idAnime', 'caption': 'Предок', 'isVisible': True, 'isReference': False, 'order':70, 'attrType':'Integer'},
 		{'name': 'id', 'caption': 'id', 'isVisible': False, 'isReference': False, 'order':-1, 'attrType':'Integer'}
     ]
     
@@ -23,6 +24,7 @@ class Default(BaseDefaultWeb):
 			t.sComment,
 			t.bVisible,
 			t.bEnd,
+			t.idAnime,
 			t.id
         FROM Anp_Anime t
 			
@@ -37,6 +39,7 @@ class List(Default, BaseListWeb):
 		{'name': 'sComment', 'caption': 'Мой коментарий', 'isVisible': True, 'isReference': False, 'order':40, 'attrType':'Text'},
 		{'name': 'bVisible', 'caption': 'Просмотренно', 'isVisible': True, 'isReference': False, 'order':50, 'attrType':'Integer'},
 		{'name': 'bEnd', 'caption': 'Закончилось', 'isVisible': True, 'isReference': False, 'order':60, 'attrType':'Integer'},
+		{'name': 'idAnime', 'caption': 'Предок', 'isVisible': True, 'isReference': False, 'order':70, 'attrType':'Integer'},
 		{'name': 'id', 'caption': 'id', 'isVisible': False, 'isReference': False, 'order':-1, 'attrType':'Integer'}
     ]
     
@@ -50,6 +53,7 @@ class Card(Default, BaseCardWeb):
 		{'name': 'sComment', 'caption': 'Мой коментарий', 'isVisible': True, 'isReference': False, 'order':40, 'attrType':'Text'},
 		{'name': 'bVisible', 'caption': 'Просмотренно', 'isVisible': True, 'isReference': False, 'order':50, 'attrType':'Integer'},
 		{'name': 'bEnd', 'caption': 'Закончилось', 'isVisible': True, 'isReference': False, 'order':60, 'attrType':'Integer'},
+		{'name': 'idAnime', 'caption': 'Предок', 'isVisible': True, 'isReference': False, 'order':70, 'attrType':'Integer'},
 		{'name': 'id', 'caption': 'id', 'isVisible': False, 'isReference': False, 'order':-1, 'attrType':'Integer'}
     ]
     
